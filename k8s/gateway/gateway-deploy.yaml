@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-deploy
+  namespace: stockflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      name: deploy-pod
+      labels:
+        app: gateway
+    spec:
+      containers:
+      - name: gateway
+        image: gustavosenainfnet/stockflow-gateway:1.0
+        ports:
+          - containerPort: 9000
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 9000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 2
+          failureThreshold: 10

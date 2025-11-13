@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: gateway
+  webflux:
+    base-path: /
+  cloud:
+    consul:
+      loadbalancer:
+        health-check:
+          enabled: true
+      host: 10.101.0.39
+      port: 8500
+      discovery:
+        query-passing: true
+        register: true
+        prefer-ip-address: true
+        health-check-path: /actuator/health
+        health-check-interval: 5s
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lowerCaseServiceId: true
+          routes:
+            - id: ocr
+              uri: lb://ocr-api
+              predicates:
+                - Path=/api/ocr/**
+              filters:
+                - StripPrefix=2
+            - id: stockflow
+              uri: lb://stockflow
+              predicates:
+                - Path=/api/stockflow/**
+              filters:
+                - StripPrefix=2
+server:
+  port: 9000
