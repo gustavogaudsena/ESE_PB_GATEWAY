@@ -8,7 +8,7 @@ spring:
       loadbalancer:
         health-check:
           enabled: true
-      host: 10.101.0.39
+      host: consul-node.stockflow.svc.cluster.local
       port: 8500
       discovery:
         query-passing: true
