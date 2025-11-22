@@ -1,6 +1,0 @@
-  k create namespace stockflow
- k apply -f gateway/gateway-deploy.yaml
- k get pods -n stockflow
- k scale deploy gateway-deploy --replicas=5  -n stockflow
- docker build . -f docker/Dockerfile -t gustavosenainfnet/stockflow-gateway:1.0
- docker run -it --rm gustavosenainfnet/stockflow-gateway:1.0

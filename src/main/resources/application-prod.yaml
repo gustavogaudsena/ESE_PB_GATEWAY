@@ -1,6 +1,11 @@
 spring:
   application:
     name: gateway
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: consul-node.keycloack.svc.cluster.local
   webflux:
     base-path: /
   cloud:
