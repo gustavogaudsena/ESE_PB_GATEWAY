@@ -5,8 +5,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: consul-node.keycloack.svc.cluster.local
-  webflux:
+        issuer-uri: http://keycloak-cluster.stockflow.svc.cluster.local:8000/realms/stockflow
+        webflux:
     base-path: /
   cloud:
     consul:
@@ -21,6 +21,7 @@ spring:
         prefer-ip-address: true
         health-check-path: /actuator/health
         health-check-interval: 5s
+        instance-id: ${spring.application.name}:${server.port}:${random.value[6]}
     gateway:
       server:
         webflux:
