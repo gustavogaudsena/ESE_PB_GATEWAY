@@ -5,8 +5,9 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-        issuer-uri: http://keycloak-cluster.stockflow.svc.cluster.local:8000/realms/stockflow
-        webflux:
+          issuer-uri: ${AUTH_ISSUER_URI:http://localhost:30900/realms/stockflow}
+          jwk-set-uri: http://keycloak-cluster.stockflow.svc.cluster.local:8000/realms/stockflow/protocol/openid-connect/certs
+  webflux:
     base-path: /
   cloud:
     consul:
@@ -42,5 +43,12 @@ spring:
                 - Path=/api/stockflow/**
               filters:
                 - StripPrefix=2
+            - id: keycloak-route
+              uri: http://keycloak-cluster.stockflow.svc.cluster.local:8000
+              predicates:
+                - Path=/login/**
+              filters:
+                - StripPrefix=1
+
 server:
   port: 9000
